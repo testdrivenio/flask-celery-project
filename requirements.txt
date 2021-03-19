@@ -1,0 +1,13 @@
+eventlet
+Flask
+Flask-CeleryExt
+Flask-Migrate
+Flask-SQLAlchemy
+Flask-SocketIO==5.0.1
+Flask-WTF
+flower
+celery==4.4.7
+psycopg2-binary
+redis==3.5.3
+requests
+watchgod
