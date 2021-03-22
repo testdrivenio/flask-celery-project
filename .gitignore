@@ -1,3 +1,4 @@
 celerybeat.pid
 .DS_Store
 __pycache__
+upload

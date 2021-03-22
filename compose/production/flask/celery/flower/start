@@ -1,0 +1,19 @@
+#!/bin/bash
+
+set -o errexit
+set -o nounset
+
+worker_ready() {
+    celery -A project.wsgi.celery inspect ping
+}
+
+until worker_ready; do
+  >&2 echo 'Celery workers not available'
+  sleep 1
+done
+>&2 echo 'Celery workers is available'
+
+flower --persistent=1 --db=/app/flower_db/flower.db  \
+    --app=project.wsgi.celery \
+    --broker="${CELERY_BROKER_URL}" \
+    --basic_auth="${CELERY_FLOWER_USER}:${CELERY_FLOWER_PASSWORD}"

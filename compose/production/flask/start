@@ -1,0 +1,8 @@
+#!/bin/bash
+
+set -o errexit
+set -o pipefail
+set -o nounset
+
+flask db upgrade
+gunicorn project.wsgi:app -k eventlet -w 1 --bind 0.0.0.0:5000 --chdir=/app

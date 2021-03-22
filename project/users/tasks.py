@@ -1,9 +1,12 @@
+import logging
 import random
 
 import requests
 from celery import shared_task
-from celery.signals import task_postrun
+from celery.signals import task_postrun, after_setup_logger
 from celery.utils.log import get_task_logger
+
+from project.celery_utils import custom_celery_task
 
 logger = get_task_logger(__name__)
 
@@ -75,3 +78,38 @@ def task_send_welcome_email(user_pk):
     from project.users.models import User
     user = User.query.get(user_pk)
     logger.info(f'send email to {user.email} {user.id}')
+
+
+@shared_task()
+def task_test_logger():
+    logger.info('test')
+
+
+@after_setup_logger.connect()
+def on_after_setup_logger(logger, **kwargs):
+    formatter = logger.handlers[0].formatter
+    file_handler = logging.FileHandler('celery.log')
+    file_handler.setFormatter(formatter)
+    logger.addHandler(file_handler)
+
+
+@shared_task(bind=True)
+def task_add_subscribe(self, user_pk):
+    try:
+        from project.users.models import User
+        user = User.query.get(user_pk)
+        requests.post(
+            'https://httpbin.org/delay/5',
+            data={'email': user.email},
+        )
+    except Exception as exc:
+        raise self.retry(exc=exc)
+
+
+@custom_celery_task(max_retries=3)
+def task_process_notification():
+    if not random.choice([0, 1]):
+        # mimic random error
+        raise Exception()
+
+    requests.post('https://httpbin.org/delay/5')

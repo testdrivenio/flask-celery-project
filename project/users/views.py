@@ -1,16 +1,21 @@
 import random
 import logging
-from string import ascii_lowercase  # new
+from string import ascii_lowercase
 
 import requests
 from celery.result import AsyncResult
 from flask import Blueprint, render_template, flash, abort, request, Response, jsonify, current_app
 
 from . import users_blueprint
-from project import csrf, db  # updated
+from project import csrf, db
 from project.users.forms import YourForm
-from project.users.models import User  # new
-from project.users.tasks import sample_task, task_process_notification, task_send_welcome_email  # updated
+from project.users.models import User
+from project.users.tasks import (
+    sample_task,
+    task_add_subscribe,
+    task_process_notification,
+    task_send_welcome_email,
+)
 
 
 # helpers
@@ -109,3 +114,31 @@ def transaction_celery():
     current_app.logger.info(f'user {user.id} {user.username} is persistent now')
     task_send_welcome_email.delay(user.id)
     return 'done'
+
+
+@users_blueprint.route('/user_subscribe/', methods=('GET', 'POST'))
+def user_subscribe():
+    form = YourForm()
+    if form.validate_on_submit():
+        try:
+            user = db.session.query(User).filter_by(
+                username=form.username.data
+            ).first()
+            if user:
+                user_id = user.id
+            else:
+                user = User(
+                    username=form.username.data,
+                    email=form.email.data,
+                )
+                db.session.add(user)
+                db.session.commit()
+                user_id = user.id
+        except Exception as e:
+            db.session.rollback()
+            raise
+
+        task_add_subscribe.delay(user_id)
+        return 'sent task to Celery successfully'
+
+    return render_template('user_subscribe.html', form=form)

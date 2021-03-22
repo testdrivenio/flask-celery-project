@@ -1,4 +1,5 @@
 eventlet
+factory-boy
 Flask
 Flask-CeleryExt
 Flask-Migrate
@@ -6,8 +7,14 @@ Flask-SQLAlchemy
 Flask-SocketIO==5.0.1
 Flask-WTF
 flower
+gunicorn
 celery==4.4.7
+Pillow
 psycopg2-binary
+pytest
+pytest-cov
+pytest-factoryboy
+pytest-flask
 redis==3.5.3
 requests
 watchgod

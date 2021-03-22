@@ -13,7 +13,7 @@ def route_task(name, args, kwargs, options, task=None, **kw):
 
 class BaseConfig:
     """Base configuration"""
-    BASE_DIR = Path(__file__).parent
+    BASE_DIR = Path(__file__).parent.parent
 
     TESTING = False
     SQLALCHEMY_TRACK_MODIFICATIONS = False
@@ -51,6 +51,8 @@ class BaseConfig:
 
     CELERY_TASK_ROUTES = (route_task,)
 
+    UPLOADS_DEFAULT_DEST = str(BASE_DIR / 'upload')  # new
+
 
 class DevelopmentConfig(BaseConfig):
     """Development configuration"""
@@ -62,7 +64,16 @@ class ProductionConfig(BaseConfig):
     DEBUG = False
 
 
+class TestingConfig(BaseConfig):
+    TESTING = True
+    SQLALCHEMY_DATABASE_URI = 'sqlite://'
+    SOCKETIO_MESSAGE_QUEUE = None
+    SECRET_KEY = 'my secret'
+    WTF_CSRF_ENABLED = False
+
+
 config = {
-    "development": DevelopmentConfig,
-    "production": ProductionConfig,
+    'development': DevelopmentConfig,
+    'production': ProductionConfig,
+    'testing': TestingConfig
 }
