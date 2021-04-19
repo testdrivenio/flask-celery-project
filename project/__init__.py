@@ -21,7 +21,7 @@ socketio = SocketIO()
 
 def create_app(config_name=None):
     if config_name is None:
-        config_name = os.environ.get('FLACK_CONFIG', 'development')
+        config_name = os.environ.get('FLASK_CONFIG', 'development')
 
     # instantiate the app
     app = Flask(__name__)
