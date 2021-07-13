@@ -1,14 +1,14 @@
-eventlet
+eventlet==0.30.2         # https://github.com/benoitc/gunicorn/pull/2581
 factory-boy
-Flask
+Flask==2.0.1
 Flask-CeleryExt
 Flask-Migrate
 Flask-SQLAlchemy
 Flask-SocketIO==5.0.1
 Flask-WTF
-flower
+flower==1.0.0
 gunicorn
-celery==4.4.7
+celery==5.1.2
 Pillow
 psycopg2-binary
 pytest

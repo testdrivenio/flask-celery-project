@@ -13,7 +13,8 @@ until worker_ready; do
 done
 >&2 echo 'Celery workers is available'
 
-flower --persistent=1 --db=/app/flower_db/flower.db  \
-    --app=project.wsgi.celery \
+celery -A celery_app.celery \
     --broker="${CELERY_BROKER_URL}" \
-    --basic_auth="${CELERY_FLOWER_USER}:${CELERY_FLOWER_PASSWORD}"
+    flower \
+    --basic_auth="${CELERY_FLOWER_USER}:${CELERY_FLOWER_PASSWORD}" \
+    --persistent=1 --db=/app/flower_db/flower.db  --state_save_interval=5000

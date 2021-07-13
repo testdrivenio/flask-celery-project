@@ -4,4 +4,4 @@ set -o errexit
 set -o nounset
 
 rm -f './celerybeat.pid'
-celery beat -A celery_app.celery -l info
+celery -A celery_app.celery beat -l info

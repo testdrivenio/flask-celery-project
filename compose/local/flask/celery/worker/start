@@ -3,5 +3,5 @@
 set -o errexit
 set -o nounset
 
-# celery worker -A app.celery --loglevel=info
+# celery -A app.celery worker --loglevel=info
 flask celery_worker
