@@ -3,4 +3,4 @@
 set -o errexit
 set -o nounset
 
-celery beat -A project.wsgi.celery -l info
+celery -A celery_app.celery beat -l info
