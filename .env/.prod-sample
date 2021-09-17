@@ -1,0 +1,13 @@
+FLASK_ENV=production
+FLASK_CONFIG=production
+DATABASE_URL=postgresql://flask_celery:flask_celery@db/flask_celery
+SECRET_KEY=my_precious
+CELERY_BROKER_URL=amqp://admin:admin@rabbitmq:5672/
+CELERY_RESULT_BACKEND=redis://redis:6379/0
+SOCKETIO_MESSAGE_QUEUE=redis://redis:6379/0
+
+RABBITMQ_DEFAULT_USER=admin
+RABBITMQ_DEFAULT_PASS=admin
+
+CELERY_FLOWER_USER=admin
+CELERY_FLOWER_PASSWORD=admin
