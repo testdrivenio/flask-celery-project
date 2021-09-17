@@ -42,6 +42,11 @@ services:
     command: /start-celeryworker
     volumes:
       - .:/app
+    # logging:
+    #   driver: syslog
+    #   options:
+    #     syslog-address: "tcp+tls://logs2.papertrailapp.com:45883"
+    #     tag: "{{.Name}}/{{.ID}}"
     env_file:
       - .env/.dev-sample
     environment:
