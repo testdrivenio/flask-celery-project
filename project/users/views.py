@@ -1,6 +1,6 @@
 import random
 import logging
-from string import ascii_lowercase  # new
+from string import ascii_lowercase
 
 import requests
 from celery.result import AsyncResult

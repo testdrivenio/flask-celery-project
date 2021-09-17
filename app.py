@@ -1,5 +1,5 @@
-import eventlet  # new
-eventlet.monkey_patch()  # new
+import eventlet
+eventlet.monkey_patch()
 
 from project import create_app, ext_celery, socketio
 
