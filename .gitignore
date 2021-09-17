@@ -1,6 +1,0 @@
-/.idea/
-celerybeat.pid
-celerybeat-schedule
-.DS_Store
-__pycache__
-upload
