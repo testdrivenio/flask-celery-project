@@ -5,7 +5,6 @@ from project import create_app, db as _db
 from project.tdd.factories import MemberFactory
 from project.users.factories import UserFactory
 
-
 register(UserFactory)
 register(MemberFactory)
 

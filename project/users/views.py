@@ -18,8 +18,6 @@ from project.users.tasks import (
 )
 
 
-# helpers
-
 def random_username():
     username = ''.join([random.choice(ascii_lowercase) for i in range(5)])
     return username
@@ -33,8 +31,6 @@ def api_call(email):
     # used for simulating a call to a third-party api
     requests.post('https://httpbin.org/delay/5')
 
-
-# views
 
 @users_blueprint.route('/form/', methods=('GET', 'POST'))
 def subscribe():

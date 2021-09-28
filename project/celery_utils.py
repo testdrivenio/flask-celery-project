@@ -47,7 +47,8 @@ class custom_celery_task:
         @functools.wraps(func)
         def wrapper_func(*args, **kwargs):
             try:
-                return func(*args, **kwargs)
+                with task_func.app.flask_app.app_context():
+                    return func(*args, **kwargs)
             except self.EXCEPTION_BLOCK_LIST:
                 # do not retry for those exceptions
                 raise
@@ -58,6 +59,7 @@ class custom_celery_task:
 
         task_func = shared_task(*self.task_args, **self.task_kwargs)(wrapper_func)
         return task_func
+
 
     def _get_retry_countdown(self, task_func):
         retry_backoff = int(

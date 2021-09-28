@@ -5,6 +5,8 @@ from flask import url_for
 
 from project.users import tasks
 from project.users.models import User
+from project.users.factories import UserFactory
+
 
 
 def test_pytest_setup(client, db):

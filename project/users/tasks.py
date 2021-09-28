@@ -1,12 +1,13 @@
-import logging
 import random
-
+import logging
 import requests
-from celery import shared_task
-from celery.signals import task_postrun, after_setup_logger
-from celery.utils.log import get_task_logger
 
+from celery.signals import after_setup_logger
+from celery import shared_task
+from celery.utils.log import get_task_logger
+from celery.signals import task_postrun
 from project.celery_utils import custom_celery_task
+
 
 logger = get_task_logger(__name__)
 
@@ -28,13 +29,14 @@ def sample_task(email):
     api_call(email)
 
 
-@shared_task(bind=True, autoretry_for=(Exception,), retry_backoff=5, retry_jitter=True, retry_kwargs={'max_retries': 5})
-def task_process_notification(self):
+@custom_celery_task(max_retries=3)
+def task_process_notification():
     if not random.choice([0, 1]):
         # mimic random error
         raise Exception()
 
     requests.post('https://httpbin.org/delay/5')
+
 
 @task_postrun.connect
 def task_postrun_handler(task_id, **kwargs):
@@ -60,17 +62,6 @@ def dynamic_example_two():
 @shared_task(name='high_priority:dynamic_example_three')
 def dynamic_example_three():
     logger.info('Example Three')
-
-
-# @shared_task()
-# def task_send_welcome_email(user_pk):
-#     from project import create_app
-#     from project.users.models import User
-
-#     app = create_app()
-#     with app.app_context():
-#         user = User.query.get(user_pk)
-#         logger.info(f'send email to {user.email} {user.id}')
 
 
 @shared_task()
@@ -104,12 +95,3 @@ def task_add_subscribe(self, user_pk):
         )
     except Exception as exc:
         raise self.retry(exc=exc)
-
-
-@custom_celery_task(max_retries=3)
-def task_process_notification():
-    if not random.choice([0, 1]):
-        # mimic random error
-        raise Exception()
-
-    requests.post('https://httpbin.org/delay/5')
