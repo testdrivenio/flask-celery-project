@@ -1,0 +1,13 @@
+<form class="your-form" method="post">
+  {{ form.csrf_token }}
+  <div class="field">
+    {{ form.email.label }}
+    {{ form.email }}
+  </div>
+  <div class="field">
+    {{ form.username.label }}
+    {{ form.username }}
+  </div>
+  <div class="messages"></div>
+  <button type="submit">Submit</button>
+</form>
