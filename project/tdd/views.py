@@ -7,7 +7,7 @@ from . import tdd_blueprint
 from project import db
 from project.tdd.forms import MemberForm
 from project.tdd.models import Member
-from project.tdd.tasks import generate_avatar_thumbnail   # new
+from project.tdd.tasks import generate_avatar_thumbnail
 
 
 @tdd_blueprint.route('/member_signup/', methods=('GET', 'POST'))

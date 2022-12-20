@@ -45,7 +45,7 @@ services:
     env_file:
       - .env/.dev-sample
     environment:
-      - FLASK_APP=celery_app  # updated
+      - FLASK_APP=celery_app
     depends_on:
       - redis
       - db
