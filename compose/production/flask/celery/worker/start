@@ -3,4 +3,4 @@
 set -o errexit
 set -o nounset
 
-celery -A project.wsgi.celery worker --loglevel=info
+exec celery -A project.wsgi.celery worker --loglevel=info

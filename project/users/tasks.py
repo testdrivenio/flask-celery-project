@@ -1,13 +1,13 @@
-import random
 import logging
-import requests
 
 from celery.signals import after_setup_logger
+import random
+
+import requests
 from celery import shared_task
 from celery.utils.log import get_task_logger
 from celery.signals import task_postrun
 from project.celery_utils import custom_celery_task
-
 
 logger = get_task_logger(__name__)
 

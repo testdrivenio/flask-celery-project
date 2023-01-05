@@ -10,6 +10,6 @@ class MemberForm(FlaskForm):
         'Avatar',
         validators=[
             FileRequired(),
-            FileAllowed(['jpg'], 'Images only!')
+            FileAllowed(['jpg', 'jpeg', 'png'], 'Images only!')
         ]
     )

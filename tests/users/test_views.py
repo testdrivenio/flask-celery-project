@@ -8,7 +8,6 @@ from project.users.models import User
 from project.users.factories import UserFactory
 
 
-
 def test_pytest_setup(client, db):
     # test view
     response = client.get('/users/form/')

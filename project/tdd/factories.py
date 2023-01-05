@@ -2,7 +2,7 @@ import os
 
 import factory
 from factory import LazyAttribute
-from factory.fuzzy import FuzzyText
+from factory import LazyAttribute, Faker
 from flask import current_app
 from PIL import Image
 
@@ -17,7 +17,7 @@ class MemberFactory(factory.alchemy.SQLAlchemyModelFactory):
         sqlalchemy_get_or_create = ('username',)
         sqlalchemy_session_persistence = "commit"
 
-    username = FuzzyText(length=6)
+    username = Faker("user_name")
     email = LazyAttribute(lambda o: '%s@example.com' % o.username)
 
     @factory.lazy_attribute

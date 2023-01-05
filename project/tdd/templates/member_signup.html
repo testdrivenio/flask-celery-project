@@ -1,5 +1,10 @@
 <h2>Member Sign Up</h2>
 <form class="your-form" method="post" enctype="multipart/form-data">
+
+  {% for field, errors in form.errors.items() %}
+  {{ ', '.join(errors) }}
+  {% endfor %}
+
   {{ form.csrf_token }}
 
   <div class="field">

@@ -16,7 +16,7 @@ class BaseConfig:
 
     TESTING = False
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', f'sqlite:///{BASE_DIR}/db.sqlite3')
+    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL", f"sqlite:///{BASE_DIR}/db.sqlite3")
 
     CELERY_BROKER_URL = os.environ.get("CELERY_BROKER_URL", "redis://127.0.0.1:6379/0")
     CELERY_RESULT_BACKEND = os.environ.get("CELERY_RESULT_BACKEND", "redis://127.0.0.1:6379/0")
@@ -28,12 +28,12 @@ class BaseConfig:
         'redis://127.0.0.1:6379/0'
     )
 
-    CELERY_BEAT_SCHEDULE = {
-        # 'task-schedule-work': {
-        #     'task': 'task_schedule_work',
-        #     "schedule": 5.0,  # five seconds
-        # },
-    }
+    # CELERY_BEAT_SCHEDULE = {
+    #     'task-schedule-work': {
+    #         'task': 'task_schedule_work',
+    #         "schedule": 5.0,  # five seconds
+    #     },
+    # }
 
     CELERY_TASK_DEFAULT_QUEUE = 'default'
 
@@ -49,7 +49,6 @@ class BaseConfig:
     )
 
     CELERY_TASK_ROUTES = (route_task,)
-
     UPLOADS_DEFAULT_DEST = str(BASE_DIR / 'upload')
 
 
@@ -72,7 +71,7 @@ class TestingConfig(BaseConfig):
 
 
 config = {
-    'development': DevelopmentConfig,
-    'production': ProductionConfig,
+    "development": DevelopmentConfig,
+    "production": ProductionConfig,
     'testing': TestingConfig
 }

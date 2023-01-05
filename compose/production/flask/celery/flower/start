@@ -13,7 +13,7 @@ until worker_ready; do
 done
 >&2 echo 'Celery workers is available'
 
-celery -A celery_app.celery \
+exec celery -A project.wsgi.celery \
     --broker="${CELERY_BROKER_URL}" \
     flower \
     --basic_auth="${CELERY_FLOWER_USER}:${CELERY_FLOWER_PASSWORD}" \

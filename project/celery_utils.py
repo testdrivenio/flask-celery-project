@@ -1,5 +1,6 @@
 import functools
 
+from flask import has_app_context
 from celery import current_app as current_celery_app
 from celery import Task, shared_task
 from celery.utils.time import get_exponential_backoff_interval
@@ -25,8 +26,10 @@ class AppContextTask(Task):
 
     def __call__(self, *args, **kwargs):
         # self.app is the Celery app instance
+        if has_app_context():
+            return Task.__call__(self, *args, **kwargs)
         with self.app.flask_app.app_context():
-            Task.__call__(self, *args, **kwargs)
+            return Task.__call__(self, *args, **kwargs)
 
 
 class custom_celery_task:
@@ -47,8 +50,7 @@ class custom_celery_task:
         @functools.wraps(func)
         def wrapper_func(*args, **kwargs):
             try:
-                with task_func.app.flask_app.app_context():
-                    return func(*args, **kwargs)
+                return func(*args, **kwargs)
             except self.EXCEPTION_BLOCK_LIST:
                 # do not retry for those exceptions
                 raise
@@ -59,7 +61,6 @@ class custom_celery_task:
 
         task_func = shared_task(*self.task_args, **self.task_kwargs)(wrapper_func)
         return task_func
-
 
     def _get_retry_countdown(self, task_func):
         retry_backoff = int(

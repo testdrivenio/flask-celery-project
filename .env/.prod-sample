@@ -1,4 +1,4 @@
-FLASK_ENV=production
+FLASK_DEBUG=0
 FLASK_CONFIG=production
 DATABASE_URL=postgresql://flask_celery:flask_celery@db/flask_celery
 SECRET_KEY=my_precious

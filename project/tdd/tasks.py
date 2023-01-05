@@ -17,7 +17,7 @@ def generate_avatar_thumbnail(member_pk):
         member.avatar
     )
 
-    thumbnail_path = f'{member.id}-avatar-thumbnail.jpg'
+    thumbnail_path = f'{member.id}-avatar-thumbnail.png'
     thumbnail_full_path = os.path.join(
         current_app.config['UPLOADS_DEFAULT_DEST'],
         thumbnail_path
@@ -26,7 +26,7 @@ def generate_avatar_thumbnail(member_pk):
     im = Image.open(full_path)
     size = (100, 100)
     im.thumbnail(size)
-    im.save(thumbnail_full_path, 'JPEG')
+    im.save(thumbnail_full_path, 'PNG')
 
     member.avatar_thumbnail = thumbnail_path
     db.session.add(member)

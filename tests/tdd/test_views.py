@@ -1,11 +1,12 @@
 import os
 from unittest import mock
 
+from project.tdd import tasks
+
 from flask import current_app, url_for
 from werkzeug.datastructures import FileStorage
 
 from project.tdd.models import Member
-from project.tdd import tasks
 
 
 def test_get(client, db):
@@ -46,7 +47,6 @@ def test_post(client, db, member_factory, monkeypatch):
     mock_generate_avatar_thumbnail_delay.assert_called_with(
         member.id
     )
-
 
 
 def test_post_fail(client, db, member_factory):
