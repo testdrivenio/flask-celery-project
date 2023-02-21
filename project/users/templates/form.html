@@ -33,7 +33,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js" integrity="sha512-1/RvZTcCDEUjY/CypiMz+iqqtaoQfAITmNSJY17Myp4Ms5mdxPS5UV7iOfdZoxcGhzFbOm6sntTKJppjvuhg4g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
   <script>
-    function update_progress(yourForm, task_id, btnHtml) {
+    function updateProgress(yourForm, task_id, btnHtml) {
       fetch(`/users/task_status/?task_id=${task_id}`, {
         method: 'GET',
       })
@@ -57,7 +57,7 @@
           } else {
             // the task is still running
             setTimeout(function () {
-              update_progress(yourForm, task_id, btnHtml);
+              updateProgress(yourForm, task_id, btnHtml);
             }, 1000);
           }
         })
@@ -112,7 +112,7 @@
           .then((res) => {
             // after we get Celery task id, we start polling
             const task_id = res.task_id;
-            update_progress(yourForm, task_id, btnHtml);
+            updateProgress(yourForm, task_id, btnHtml);
             console.log(res);
           })
           .catch((error) => {
