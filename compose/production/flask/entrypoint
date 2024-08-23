@@ -11,7 +11,7 @@ postgres_ready() {
 python << END
 import sys
 
-import psycopg2
+import psycopg
 import urllib.parse as urlparse
 import os
 
@@ -23,14 +23,14 @@ host = url.hostname
 port = url.port
 
 try:
-    psycopg2.connect(
+    psycopg.connect(
         dbname=dbname,
         user=user,
         password=password,
         host=host,
         port=port
     )
-except psycopg2.OperationalError:
+except psycopg.OperationalError:
     sys.exit(-1)
 sys.exit(0)
 

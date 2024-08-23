@@ -1,15 +1,15 @@
 import random
 import logging
-from string import ascii_lowercase
+from string import ascii_lowercase  # new
 
 import requests
 from celery.result import AsyncResult
 from flask import Blueprint, render_template, flash, abort, request, Response, jsonify, current_app
 
 from . import users_blueprint
-from project import csrf, db
+from project import csrf, db  # updated
 from project.users.forms import YourForm
-from project.users.models import User
+from project.users.models import User  # new
 from project.users.tasks import (
     sample_task,
     task_add_subscribe,
@@ -79,9 +79,9 @@ def webhook_test():
 @users_blueprint.route('/webhook_test_async/', methods=('POST', ))
 @csrf.exempt
 def webhook_test_async():
-    task = task_process_notification.delay()
-    current_app.logger.info(task.id)
-    return 'pong'
+   task = task_process_notification.delay()
+   current_app.logger.info(task.id)
+   return 'pong'
 
 
 @users_blueprint.route('/form_ws/', methods=('GET', 'POST'))
@@ -97,17 +97,13 @@ def subscribe_ws():
 
 @users_blueprint.route('/transaction_celery/', methods=('GET', 'POST'))
 def transaction_celery():
-    try:
-        username = random_username()
-        user = User(
-            username=f'{username}',
-            email=f'{username}@test.com',
-        )
+    username = random_username()
+    user = User(
+        username=f'{username}',
+        email=f'{username}@test.com',
+    )
+    with db.session.begin():
         db.session.add(user)
-        db.session.commit()
-    except Exception as e:
-        db.session.rollback()
-        raise
 
     current_app.logger.info(f'user {user.id} {user.username} is persistent now')
     task_send_welcome_email.delay(user.id)
