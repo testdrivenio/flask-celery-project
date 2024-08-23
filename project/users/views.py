@@ -76,12 +76,12 @@ def webhook_test():
     return 'pong'
 
 
-@users_blueprint.route('/webhook_test_async/', methods=('POST', ))
+@users_blueprint.route('/webhook_test_async/', methods=('POST',))
 @csrf.exempt
 def webhook_test_async():
-   task = task_process_notification.delay()
-   current_app.logger.info(task.id)
-   return 'pong'
+    task = task_process_notification.delay()
+    current_app.logger.info(task.id)
+    return 'pong'
 
 
 @users_blueprint.route('/form_ws/', methods=('GET', 'POST'))
