@@ -1,6 +1,6 @@
 FLASK_DEBUG=0
 FLASK_CONFIG=production
-DATABASE_URL=postgresql://flask_celery:flask_celery@db/flask_celery
+DATABASE_URL=postgresql+psycopg://flask_celery:flask_celery@db/flask_celery
 SECRET_KEY=my_precious
 CELERY_BROKER_URL=amqp://admin:admin@rabbitmq:5672/
 CELERY_RESULT_BACKEND=redis://redis:6379/0

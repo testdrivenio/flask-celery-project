@@ -25,8 +25,8 @@ def throwing_no_retry_task():
 def throwing_retry_task():
     raise Exception
 
-# tests
 
+# tests
 
 def test_custom_celery_task(db, config, user):
     config.update(CELERY_TASK_ALWAYS_EAGER=True)

@@ -7,7 +7,7 @@ from . import tdd_blueprint
 from project import db
 from project.tdd.forms import MemberForm
 from project.tdd.models import Member
-from project.tdd.tasks import generate_avatar_thumbnail
+from project.tdd.tasks import generate_avatar_thumbnail   # new
 
 
 @tdd_blueprint.route('/member_signup/', methods=('GET', 'POST'))
@@ -34,7 +34,7 @@ def member_signup():
             db.session.rollback()
             raise
 
-        generate_avatar_thumbnail.delay(member_id)
+        generate_avatar_thumbnail.delay(member_id)            # new
         return 'Sign up successful'
 
     return render_template('member_signup.html', form=form)

@@ -1,4 +1,4 @@
-FROM python:3.9-slim-buster
+FROM python:3.11-slim-buster
 
 ENV PYTHONUNBUFFERED 1
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -6,7 +6,7 @@ ENV PYTHONDONTWRITEBYTECODE 1
 RUN apt-get update \
   # dependencies for building Python packages
   && apt-get install -y build-essential \
-  # psycopg2 dependencies
+  # psycopg dependencies
   && apt-get install -y libpq-dev \
   # Additional dependencies
   && apt-get install -y telnet netcat \

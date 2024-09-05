@@ -4,6 +4,7 @@ import pytest
 import requests
 from celery.exceptions import Retry
 
+from project.users.factories import UserFactory
 from project.users.tasks import task_add_subscribe
 
 
